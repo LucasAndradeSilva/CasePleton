@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CasePletonNews.API\CasePletonNews.API.csproj" />
+    <ProjectReference Include="..\CasePletonNews.API\CasePletonNews.API.csproj" />
   </ItemGroup>
 
 </Project>

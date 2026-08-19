@@ -8,10 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.11" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\CasePletonNews.ServiceDefaults\CasePletonNews.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\CasePletonNews.ServiceDefaults\CasePletonNews.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

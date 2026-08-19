@@ -1,12 +1,12 @@
 <Solution>
-  <Folder Name="/01 - Applicatoin Layer/">
-    <Project Path="../CasePletonNews.API/CasePletonNews.API.csproj" />
+  <Folder Name="/01 - Application Layer/">
+    <Project Path="CasePletonNews.API/CasePletonNews.API.csproj" />
   </Folder>
   <Folder Name="/02 - Observability/">
     <Project Path="CasePletonNews.AppHost/CasePletonNews.AppHost.csproj" />
     <Project Path="CasePletonNews.ServiceDefaults/CasePletonNews.ServiceDefaults.csproj" />
   </Folder>
   <Folder Name="/03 - Tests/">
-    <Project Path="../CasePletonNews.Test/CasePletonNews.Test.csproj" />
+    <Project Path="CasePletonNews.Test/CasePletonNews.Test.csproj" />
   </Folder>
 </Solution>
