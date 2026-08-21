@@ -1,5 +1,5 @@
-
 using CasePletonNews.API.Clients;
+using CasePletonNews.API.Endpoints;
 using CasePletonNews.API.Services;
 using Refit;
 
@@ -7,11 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
-//Config Refit
+// Config Refit
 builder.Services
     .AddRefitClient<IHackerNewsApi>()
     .ConfigureHttpClient(c =>
@@ -20,10 +19,10 @@ builder.Services
         c.Timeout = TimeSpan.FromSeconds(10);
     });
 
-//Config MemoryCache
+// Config MemoryCache
 builder.Services.AddMemoryCache();
 
-//Inject HackerNewsService
+// Inject HackerNewsService
 builder.Services.AddScoped<HackerNewsService>();
 
 var app = builder.Build();
@@ -39,8 +38,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
-app.MapControllers();
+// Endpoints
+StoriesEndpoint.Map(app);
 
 app.Run();
