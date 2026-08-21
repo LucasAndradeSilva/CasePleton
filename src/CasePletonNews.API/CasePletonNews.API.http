@@ -1,0 +1,6 @@
+@CasePletonNews.API_HostAddress = http://localhost:5198
+
+GET {{CasePletonNews.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
