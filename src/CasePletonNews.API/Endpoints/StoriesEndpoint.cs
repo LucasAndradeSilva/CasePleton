@@ -1,5 +1,7 @@
 ﻿using CasePletonNews.API.Services;
+using CasePletonNews.API.Settings;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace CasePletonNews.API.Endpoints
@@ -10,8 +12,11 @@ namespace CasePletonNews.API.Endpoints
 
         public static void Map(WebApplication app)
         {
-            app.MapGet("/api/stories/best", async (HackerNewsService service, [FromQuery] int limit = 50, CancellationToken ct = default) =>
-            {
+            app.MapGet("/api/stories/best", async (
+                IHackerNewsService service,
+                [FromQuery] int limit = 50, 
+                CancellationToken ct = default) =>
+            {                
                 _logger.Information("GET /api/stories/best called with limit {Limit}", limit);
 
                 if (limit <= 0)

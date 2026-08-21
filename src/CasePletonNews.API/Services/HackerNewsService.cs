@@ -1,18 +1,24 @@
 ﻿using CasePletonNews.API.Clients;
 using CasePletonNews.API.DTOs;
+using CasePletonNews.API.Settings;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace CasePletonNews.API.Services
 {
-    public class HackerNewsService(IHackerNewsApi _hackerNewsApi, IMemoryCache _cache)
+    public class HackerNewsService(
+        IHackerNewsApi _hackerNewsApi,
+        IMemoryCache _cache,
+        IOptions<HackerNewsSettings> _options) : IHackerNewsService
     {
         private static readonly Serilog.ILogger _logger = Log.ForContext<HackerNewsService>();
+        private readonly HackerNewsSettings _settings = _options.Value;
         private static readonly SemaphoreSlim _semaphore = new(10);
         private readonly string _cacheKey = "HackerNewsStoryId:";
 
         public async Task<IEnumerable<StoryDTO>> GetBestStoriesAsync(int limit = 50, CancellationToken ct = default)
-        {
+        {           
             _logger.Information("Fetching best stories with limit {Limit}", limit);
 
             IReadOnlyList<int> ids;
@@ -55,7 +61,7 @@ namespace CasePletonNews.API.Services
                 var storyDto = await _hackerNewsApi.GetStoryDetailsAsync(id, ct);
 
                 if (storyDto is not null)
-                    _cache.Set($"{_cacheKey}{id}", storyDto, TimeSpan.FromMinutes(5));
+                    _cache.Set($"{_cacheKey}{id}", storyDto, TimeSpan.FromMinutes(_settings.CacheMinutes));
                 else
                     _logger.Warning("Story {Id} returned null from API", id);
 

@@ -1,6 +1,7 @@
 using CasePletonNews.API.Clients;
 using CasePletonNews.API.Endpoints;
 using CasePletonNews.API.Services;
+using CasePletonNews.API.Settings;
 using Refit;
 using Serilog;
 
@@ -21,6 +22,15 @@ try
 
     builder.AddServiceDefaults();
 
+    // Settings
+    var hnSettings = builder.Configuration
+        .GetSection(HackerNewsSettings.SectionName)
+        .Get<HackerNewsSettings>()!;
+
+    builder.Services.Configure<HackerNewsSettings>(
+        builder.Configuration.GetSection(HackerNewsSettings.SectionName)
+    );
+
     builder.Services.AddOpenApi();
     builder.Services.AddSwaggerGen();
 
@@ -32,15 +42,15 @@ try
         .AddRefitClient<IHackerNewsApi>()
         .ConfigureHttpClient(c =>
         {
-            c.BaseAddress = new Uri("https://hacker-news.firebaseio.com/v0/");
-            c.Timeout = TimeSpan.FromSeconds(10);
+            c.BaseAddress = new Uri(hnSettings.BaseUrl);
+            c.Timeout = TimeSpan.FromSeconds(hnSettings.TimeoutSeconds);
         });
 
     // Config MemoryCache
     builder.Services.AddMemoryCache();
 
     // Inject HackerNewsService
-    builder.Services.AddScoped<HackerNewsService>();
+    builder.Services.AddScoped<IHackerNewsService, HackerNewsService>();
 
     var app = builder.Build();
 
