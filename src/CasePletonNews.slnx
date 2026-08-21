@@ -1,5 +1,5 @@
 <Solution>
-  <Folder Name="/01 - Application Layer/">
+  <Folder Name="/01 - Api/">
     <Project Path="CasePletonNews.API/CasePletonNews.API.csproj" />
   </Folder>
   <Folder Name="/02 - Observability/">
